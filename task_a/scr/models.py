@@ -1,91 +1,134 @@
-# task_x/src/models.py
-"""
-Model builders for SemEval-2026 Task 13.
 
-Provides:
-    - build_tfidf_linear_model  (TF–IDF + Linear model)
-    - build_transformer_model   (HuggingFace transformer)
+# SemEval-2026 Task 13 – Full System (Subtasks A, B, C)
 
-These are intentionally generic so they work for Tasks A, B, and C.
-"""
+This repository contains our complete, modular solution for **SemEval-2026 Task 13**, covering:
 
-from __future__ import annotations
-from typing import Tuple
+- **Subtask A — Binary Machine-Generated Code Detection**
+- **Subtask B — Multi-Class LLM Family Authorship Detection**
+- **Subtask C — Hybrid + Adversarial Code Classification**
 
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.pipeline import Pipeline
-from sklearn.linear_model import LogisticRegression
-from sklearn.svm import LinearSVC
+The project includes:
 
-from transformers import (
-    AutoTokenizer,
-    AutoModelForSequenceClassification,
-)
+- TF–IDF + classical ML baselines  
+- Transformer-based models (e.g., **BERT**, **CodeBERT**, **CodeT5-small**)  
+- Shared utilities for data loading, metrics, and plotting  
+- Experiment scripts for training, evaluation, and ensembling  
+- Inference pipelines for generating competition-ready submission files  
 
+All three subtasks follow the **same structure and workflow**.
 
-# -------------------------------------------------------------------
-# Classical baselines
-# -------------------------------------------------------------------
+---
 
-def build_tfidf_logreg() -> Pipeline:
-    """
-    TF–IDF (char + word n-grams) + Logistic Regression.
+## 📌 Task Overview
 
-    Good starting baseline for binary / multi-class classification.
-    """
-    vectorizer = TfidfVectorizer(
-        analyzer="char",
-        ngram_range=(3, 5),
-        min_df=5,
-        max_features=200_000,
-    )
-    clf = LogisticRegression(
-        max_iter=200,
-        n_jobs=-1,
-        class_weight="balanced",
-    )
-    pipe = Pipeline([
-        ("tfidf", vectorizer),
-        ("logreg", clf),
-    ])
-    return pipe
+### 🔹 Subtask A — Binary Machine-Generated Code Detection
 
+**Goal:**  
+Given a code snippet, determine whether it is:
 
-def build_tfidf_svm() -> Pipeline:
-    """
-    TF–IDF + LinearSVC (often stronger for multi-class like Subtask B).
-    """
-    vectorizer = TfidfVectorizer(
-        analyzer="char",
-        ngram_range=(3, 5),
-        min_df=5,
-        max_features=200_000,
-    )
-    clf = LinearSVC()
-    pipe = Pipeline([
-        ("tfidf", vectorizer),
-        ("svm", clf),
-    ])
-    return pipe
+- **Human-written**, or  
+- **Machine-generated**
 
+**Training Languages:** C++, Python, Java  
+**Domains:** Algorithmic (e.g., LeetCode-style problems), with evaluation including unseen languages and domains.  
 
-# -------------------------------------------------------------------
-# Transformer models
-# -------------------------------------------------------------------
+**Dataset sizes (approx.):**
 
-def load_transformer(
-    model_name: str,
-    num_labels: int,
-):
-    """
-    Load a transformer model + tokenizer for sequence classification.
+- Train: 500K samples (238K human, 262K machine-generated)  
+- Validation: 100K samples  
 
-    Example:
-        tokenizer, model = load_transformer("bert-base-uncased", num_labels=11)
-    """
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForSequenceClassification.from_pretrained(
-        model_name,
-        num_labels=num_labels,
-    )
-    return tokenizer, model
+**Official metric:**  
+- **Macro F1-score** (used for leaderboard ranking)
+
+---
+
+### 🔹 Subtask B — Multi-Class LLM Family Authorship Detection
+
+**Goal:**  
+Given a code snippet, predict its **author family**:
+
+- **Human**  
+- One of **10 LLM families**:
+  - DeepSeek-AI  
+  - Qwen  
+  - 01-ai  
+  - BigCode  
+  - Gemma  
+  - Phi  
+  - Meta-LLaMA  
+  - IBM-Granite  
+  - Mistral  
+  - OpenAI  
+
+**Dataset sizes (approx.):**
+
+- Train: 500K samples (highly imbalanced: many human samples, fewer per LLM family)  
+- Validation: 100K samples  
+
+**Official metric:**  
+- **Macro F1-score**
+
+---
+
+### 🔹 Subtask C — Hybrid + Adversarial Code Classification
+
+**Goal:**  
+Classify each code snippet into one of **four** categories:
+
+1. **Human-written**  
+2. **Machine-generated**  
+3. **Hybrid** – partially written or completed by an LLM  
+4. **Adversarial** – generated to mimic human style (e.g., via adversarial prompts or RLHF)  
+
+**Dataset sizes (approx.):**
+
+- Train: 900K samples  
+- Validation: 200K samples  
+
+**Official metric:**  
+- **Macro F1-score**
+
+semeval-2026-task13-full/
+│
+├── common/
+│   ├── __init__.py
+│   ├── data_utils.py       # Shared data loading utilities
+│   ├── metrics.py          # Accuracy, Macro-F1, weighted-F1, reports
+│   └── plotting.py         # Confusion matrices & visualizations
+│
+├── task_a/
+│   ├── src/
+│   │   ├── __init__.py
+│   │   ├── models.py        # TF-IDF, classical ML models, transformers
+│   │   ├── train_utils.py   # Training loops & dataloaders
+│   │   ├── eval_utils.py    # Evaluation helpers
+│   │   └── inference.py     # Submission CSV generator
+│   ├── experiments/
+│   │   ├── run_tfidf_baseline.py
+│   │   ├── run_transformer.py
+│   │   └── run_ensemble.py
+│   ├── configs/
+│   ├── results/
+│   │   ├── logs/
+│   │   ├── plots/
+│   │   └── submissions/
+│   └── data/
+│       ├── raw/             # Parquet files (NOT uploaded to GitHub)
+│       └── processed/
+│
+├── task_b/                  # Same layout as task_a
+│
+├── task_c/                  # Same layout as task_a
+│
+├── notebooks/
+│   ├── EDA.ipynb
+│   └── model_analysis.ipynb
+│
+├── scripts/
+│   ├── download_models.sh
+│   ├── prepare_data.py
+│   ├── evaluate_all.py
+│
+├── requirements.txt
+├── .gitignore
+└── README.md
