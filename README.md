@@ -1,56 +1,200 @@
-# SemEval-2026 Task 13 – Full System (Subtasks A, B, C)
-This repository contains our complete solution for **SemEval-2026 Task 13**, covering:
+```markdown
+# SemEval-2026 Task 13 – Full System Solution
 
-Subtask A — Binary Machine-Generated Code Detection
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Subtask B — Multi-Class LLM Family Authorship Detection
+Complete solution for **SemEval-2026 Task 13: Machine-Generated Code Detection and Attribution**, covering all three subtasks with modular, extensible implementations.
 
-Subtask C — Hybrid + Adversarial Code Classification 
+## 📋 Overview
 
-The project is fully modular and includes TF-IDF baselines, transformer-based models (BERT, CodeBERT, CodeT5-small), custom utilities, experiment scripts, and inference pipelines.  
-All experiments follow the same structure across Tasks A, B, and C.
+This repository provides a comprehensive framework for detecting and classifying machine-generated code:
 
-## AI Model Availability
+- **Subtask A** — Binary Machine-Generated Code Detection
+- **Subtask B** — Multi-Class LLM Family Authorship Detection
+- **Subtask C** — Hybrid + Adversarial Code Classification
 
-- `claude_haiku_4_5`: **enabled** — Claude Haiku 4.5 is enabled by default for all clients.
+### Features
 
-Clients that integrate with this repository can read the central configuration file at `configs/ai_models.yml` to programmatically detect available models and any per-client overrides. To opt out or override the default for a specific client, set an environment variable (for example `AI_MODEL_CLAUDE_HAIKU_4_5=false`) or provide a local YAML override matching the structure shown in `configs/ai_models.yml`.
+- 🔧 **Modular Architecture** — Reusable components across all subtasks
+- 🤖 **Multiple Model Types** — TF-IDF baselines, BERT, CodeBERT, CodeT5-small
+- 📊 **Comprehensive Evaluation** — Accuracy, Macro-F1, confusion matrices, detailed reports
+- 🔄 **Reproducible Experiments** — Consistent structure and configuration-driven experiments
+- 📈 **Visualization Tools** — Built-in plotting and analysis utilities
 
-See `configs/ai_models.yml` for details and example per-client overrides.
+## 🗂️ Project Structure
+
+```
 semeval-2026-task13-full/
 │
-├── common/
-│ ├── init.py
-│ ├── data_utils.py # Shared data loading utilities
-│ ├── metrics.py # Accuracy, Macro-F1, reports
-│ └── plotting.py # Confusion matrix, visualizations
+├── common/                      # Shared utilities across all tasks
+│   ├── __init__.py
+│   ├── data_utils.py           # Data loading and preprocessing
+│   ├── metrics.py              # Evaluation metrics (Accuracy, Macro-F1)
+│   └── plotting.py             # Visualization utilities
 │
-├── task_a/
-│ ├── src/
-│ │ ├── init.py
-│ │ ├── models.py # TF-IDF, transformers
-│ │ ├── train_utils.py # Train loop, collators, losses
-│ │ ├── eval_utils.py # Evaluation + metrics
-│ │ └── inference.py # Submission CSV generation
-│ ├── experiments/
-│ │ ├── run_tfidf_baseline.py
-│ │ ├── run_transformer.py
-│ │ └── run_ensemble.py
-│ ├── configs/ # YAML/JSON config files
-│ ├── results/
-│ │ ├── logs/
-│ │ ├── plots/
-│ │ └── submissions/
-│ └── data/
-│ ├── raw/
-│ └── processed/
+├── task_a/                      # Subtask A: Binary Detection
+│   ├── src/
+│   │   ├── __init__.py
+│   │   ├── models.py           # Model implementations
+│   │   ├── train_utils.py      # Training loops and utilities
+│   │   ├── eval_utils.py       # Evaluation functions
+│   │   └── inference.py        # Submission generation
+│   ├── experiments/
+│   │   ├── run_tfidf_baseline.py
+│   │   ├── run_transformer.py
+│   │   └── run_ensemble.py
+│   ├── configs/                # Configuration files (YAML/JSON)
+│   ├── results/
+│   │   ├── logs/               # Training logs
+│   │   ├── plots/              # Visualizations
+│   │   └── submissions/        # Competition submissions
+│   └── data/
+│       ├── raw/                # Original datasets
+│       └── processed/          # Preprocessed data
 │
-├── task_b/ # Same layout as task_a
-├── task_c/ # Same layout as task_a
+├── task_b/                      # Subtask B: Multi-Class Attribution
+│   └── [Same structure as task_a]
 │
-├── notebooks/ # Jupyter notebooks, analysis, error inspection
-├── scripts/ # Utility scripts (downloading, preprocessing)
+├── task_c/                      # Subtask C: Hybrid Classification
+│   └── [Same structure as task_a]
+│
+├── notebooks/                   # Jupyter notebooks for analysis
+├── scripts/                     # Utility scripts
 │
 ├── requirements.txt
 ├── .gitignore
 └── README.md
+```
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Python 3.8 or higher
+- CUDA-compatible GPU (recommended for transformer models)
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/semeval-2026-task13-full.git
+cd semeval-2026-task13-full
+```
+
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+3. Download and prepare the data:
+```bash
+python scripts/download_data.py
+python scripts/preprocess_data.py
+```
+
+## 💻 Usage
+
+### Running Experiments
+
+Each subtask follows the same experimental structure:
+
+#### TF-IDF Baseline
+```bash
+python task_a/experiments/run_tfidf_baseline.py --config task_a/configs/tfidf_config.yaml
+```
+
+#### Transformer Models
+```bash
+python task_a/experiments/run_transformer.py \
+    --model bert-base-uncased \
+    --epochs 10 \
+    --batch_size 16 \
+    --learning_rate 2e-5
+```
+
+#### Ensemble Methods
+```bash
+python task_a/experiments/run_ensemble.py --config task_a/configs/ensemble_config.yaml
+```
+
+### Generating Submissions
+
+```bash
+python task_a/src/inference.py \
+    --model_path task_a/results/best_model.pt \
+    --test_data data/test.csv \
+    --output task_a/results/submissions/submission.csv
+```
+
+## 📊 Model Performance
+
+| Subtask | Model | Accuracy | Macro-F1 |
+|---------|-------|----------|----------|
+| A | TF-IDF Baseline | TBD | TBD |
+| A | CodeBERT | TBD | TBD |
+| B | CodeT5-small | TBD | TBD |
+| C | Ensemble | TBD | TBD |
+
+## 🔧 Configuration
+
+Each experiment can be configured using YAML files in the `configs/` directory:
+
+```yaml
+model:
+  name: "microsoft/codebert-base"
+  max_length: 512
+
+training:
+  epochs: 10
+  batch_size: 16
+  learning_rate: 2e-5
+  warmup_steps: 500
+
+data:
+  train_path: "data/processed/train.csv"
+  val_path: "data/processed/val.csv"
+```
+
+## 📈 Results and Visualization
+
+Results are automatically saved to the `results/` directory for each task:
+- Training logs in `logs/`
+- Plots and confusion matrices in `plots/`
+- Submission files in `submissions/`
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📝 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🙏 Acknowledgments
+
+- SemEval-2026 Task 13 organizers
+- Hugging Face for transformer implementations
+- The open-source NLP community
+
+## 📧 Contact
+
+For questions or feedback, please open an issue or contact [your-email@example.com](mailto:your-email@example.com).
+
+## 📚 Citation
+
+If you use this code in your research, please cite:
+
+```bibtex
+@inproceedings{yourname2026semeval,
+  title={Your System Description for SemEval-2026 Task 13},
+  author={Your Name},
+  booktitle={Proceedings of SemEval-2026},
+  year={2026}
+}
+```
+
+---
+
+**Note:** This is a work in progress. Results and implementations will be updated as experiments are completed.
+```
