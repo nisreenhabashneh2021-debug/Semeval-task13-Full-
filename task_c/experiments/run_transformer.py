@@ -1,0 +1,3 @@
+python task_c/experiments/run_transformer.py
+import argparse
+from task_c.models.transformer_model import TransformerModel
