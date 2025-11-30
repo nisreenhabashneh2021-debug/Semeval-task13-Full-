@@ -1,5 +1,5 @@
 python task_b/experiments/run_transformer.py
-# task_x/experiments/run_transformer.py
+# task_B/experiments/run_transformer.py
 
 """
 Train a transformer model (e.g., BERT or CodeBERT) for a given subtask.
