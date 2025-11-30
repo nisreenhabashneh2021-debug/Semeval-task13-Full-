@@ -1,4 +1,3 @@
-```markdown
 # SemEval-2026 Task 13 – Full System Solution
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
@@ -24,18 +23,18 @@ This repository provides a comprehensive framework for detecting and classifying
 
 ## 🗂️ Project Structure
 
-```
+
 semeval-2026-task13-full/
 │
 ├── common/                      # Shared utilities across all tasks
-│   ├── __init__.py
+│   ├── _init_.py
 │   ├── data_utils.py           # Data loading and preprocessing
 │   ├── metrics.py              # Evaluation metrics (Accuracy, Macro-F1)
 │   └── plotting.py             # Visualization utilities
 │
 ├── task_a/                      # Subtask A: Binary Detection
 │   ├── src/
-│   │   ├── __init__.py
+│   │   ├── _init_.py
 │   │   ├── models.py           # Model implementations
 │   │   ├── train_utils.py      # Training loops and utilities
 │   │   ├── eval_utils.py       # Evaluation functions
@@ -65,7 +64,7 @@ semeval-2026-task13-full/
 ├── requirements.txt
 ├── .gitignore
 └── README.md
-```
+
 
 ## 🚀 Getting Started
 
@@ -77,21 +76,21 @@ semeval-2026-task13-full/
 ### Installation
 
 1. Clone the repository:
-```bash
+bash
 git clone https://github.com/yourusername/semeval-2026-task13-full.git
 cd semeval-2026-task13-full
-```
+
 
 2. Install dependencies:
-```bash
+bash
 pip install -r requirements.txt
-```
+
 
 3. Download and prepare the data:
-```bash
+bash
 python scripts/download_data.py
 python scripts/preprocess_data.py
-```
+
 
 ## 💻 Usage
 
@@ -100,32 +99,32 @@ python scripts/preprocess_data.py
 Each subtask follows the same experimental structure:
 
 #### TF-IDF Baseline
-```bash
+bash
 python task_a/experiments/run_tfidf_baseline.py --config task_a/configs/tfidf_config.yaml
-```
+
 
 #### Transformer Models
-```bash
+bash
 python task_a/experiments/run_transformer.py \
     --model bert-base-uncased \
     --epochs 10 \
     --batch_size 16 \
     --learning_rate 2e-5
-```
+
 
 #### Ensemble Methods
-```bash
+bash
 python task_a/experiments/run_ensemble.py --config task_a/configs/ensemble_config.yaml
-```
+
 
 ### Generating Submissions
 
-```bash
+bash
 python task_a/src/inference.py \
     --model_path task_a/results/best_model.pt \
     --test_data data/test.csv \
     --output task_a/results/submissions/submission.csv
-```
+
 
 ## 📊 Model Performance
 
@@ -140,7 +139,7 @@ python task_a/src/inference.py \
 
 Each experiment can be configured using YAML files in the `configs/` directory:
 
-```yaml
+yaml
 model:
   name: "microsoft/codebert-base"
   max_length: 512
@@ -154,7 +153,7 @@ training:
 data:
   train_path: "data/processed/train.csv"
   val_path: "data/processed/val.csv"
-```
+
 
 ## 📈 Results and Visualization
 
@@ -185,16 +184,15 @@ For questions or feedback, please open an issue or contact [your-email@example.c
 
 If you use this code in your research, please cite:
 
-```bibtex
+bibtex
 @inproceedings{yourname2026semeval,
   title={Your System Description for SemEval-2026 Task 13},
   author={Your Name},
   booktitle={Proceedings of SemEval-2026},
   year={2026}
 }
-```
+
 
 ---
 
 **Note:** This is a work in progress. Results and implementations will be updated as experiments are completed.
-```
