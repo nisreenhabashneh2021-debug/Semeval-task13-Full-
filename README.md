@@ -1,10 +1,11 @@
 # SemEval-2026 Task 13 – Full System (Subtasks A, B, C)
-
 This repository contains our complete solution for **SemEval-2026 Task 13**, covering:
 
-- **Subtask A** – Multi-class authorship detection  
-- **Subtask B** – Multi-class code generator identification  
-- **Subtask C** – Open-set / cross-family generalization  
+Subtask A — Binary Machine-Generated Code Detection
+
+Subtask B — Multi-Class LLM Family Authorship Detection
+
+Subtask C — Hybrid + Adversarial Code Classification 
 
 The project is fully modular and includes TF-IDF baselines, transformer-based models (BERT, CodeBERT, CodeT5-small), custom utilities, experiment scripts, and inference pipelines.  
 All experiments follow the same structure across Tasks A, B, and C.
