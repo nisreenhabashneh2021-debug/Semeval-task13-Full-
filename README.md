@@ -9,6 +9,14 @@ Subtask C — Hybrid + Adversarial Code Classification
 
 The project is fully modular and includes TF-IDF baselines, transformer-based models (BERT, CodeBERT, CodeT5-small), custom utilities, experiment scripts, and inference pipelines.  
 All experiments follow the same structure across Tasks A, B, and C.
+
+## AI Model Availability
+
+- `claude_haiku_4_5`: **enabled** — Claude Haiku 4.5 is enabled by default for all clients.
+
+Clients that integrate with this repository can read the central configuration file at `configs/ai_models.yml` to programmatically detect available models and any per-client overrides. To opt out or override the default for a specific client, set an environment variable (for example `AI_MODEL_CLAUDE_HAIKU_4_5=false`) or provide a local YAML override matching the structure shown in `configs/ai_models.yml`.
+
+See `configs/ai_models.yml` for details and example per-client overrides.
 semeval-2026-task13-full/
 │
 ├── common/
