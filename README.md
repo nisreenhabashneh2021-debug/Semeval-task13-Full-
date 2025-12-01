@@ -13,11 +13,11 @@ The solution covers **all subtasks**:
   Predict whether a snippet is *Human*, *Machine*, *Hybrid*, or *Adversarial*.
 
 Our system includes:
-- TF-IDF + SVM baselines  
-- Transformer models: **BERT, CodeBERT, CodeT5-small**  
+- simple baselines
+- Transformer models
+- ensemble models
 - GPU-optimized training loops  
 - Logging, metrics, and plotting utilities  
-- Ensemble methods  
 - Fully modular folder structure for scalable experimentation  
 
 
@@ -33,7 +33,7 @@ semeval-2026-task13-full/
 ├── task_a/                     # Subtask A modules
 │   ├── src/
 │   │   ├── __init__.py
-│   │   ├── models.py           # TF-IDF, RobeRTa/CodeT5 models/ensemble
+│   │   ├── models.py           # TF-IDF, RobeRTa/CodeT5 model/ensemble
 │   │   ├── train_utils.py      # Training loop, collators
 │   │   ├── eval_utils.py       # Evaluation + metrics
 │   │   └── inference.py        # Submission CSV generation
@@ -66,6 +66,7 @@ semeval-2026-task13-full/
 ├── .gitignore
 └── README.md
 ```
+
 
 
 
