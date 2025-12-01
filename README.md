@@ -22,7 +22,9 @@ Our system includes:
 
 
 ---
-
+```
+<your tree>
+```
 semeval-2026-task13-full/
 │
 ├── common/ # Shared utilities
@@ -54,7 +56,7 @@ semeval-2026-task13-full/
 ├── task_b/ # Subtask B (same structure as A)
 ├── task_c/ # Subtask C (same structure as A)
 │
-├── notebooks/ # EDA, debugging, error analysis
+├── notebooks/
 │ ├── EDA.ipynb
 │ └── model_analysis.ipynb
 │
