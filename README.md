@@ -21,51 +21,52 @@ Our system includes:
 - Fully modular folder structure for scalable experimentation  
 
 
----
-```
-<your tree>
 ```
 semeval-2026-task13-full/
 │
-├── common/ # Shared utilities
-│ ├── init.py
-│ ├── data_utils.py # Data loading, parquet readers
-│ ├── metrics.py # Accuracy, Macro-F1, reports
-│ └── plotting.py # Confusion matrices, plots
+├── common/                     # Shared utilities
+│   ├── __init__.py
+│   ├── data_utils.py           # Data loading, parquet readers
+│   ├── metrics.py              # Accuracy, Macro-F1, reports
+│   └── plotting.py             # Confusion matrices, plots
 │
-├── task_a/ # Subtask A modules
-│ ├── src/
-│ │ ├── init.py
-│ │ ├── models.py # TF-IDF, BERT/CodeBERT/CodeT5 models
-│ │ ├── train_utils.py # Training loop, collators
-│ │ ├── eval_utils.py # Evaluation + metrics
-│ │ └── inference.py # Submission CSV generation
-│ ├── experiments/
-│ │ ├── run_tfidf_baseline.py
-│ │ ├── run_transformer.py
-│ │ └── run_ensemble.py
-│ ├── configs/
-│ ├── results/
-│ │ ├── logs/
-│ │ ├── plots/
-│ │ └── submissions/
-│ └── data/
-│ ├── raw/
-│ └── processed/
+├── task_a/                     # Subtask A modules
+│   ├── src/
+│   │   ├── __init__.py
+│   │   ├── models.py           # TF-IDF, BERT/CodeBERT/CodeT5 models
+│   │   ├── train_utils.py      # Training loop, collators
+│   │   ├── eval_utils.py       # Evaluation + metrics
+│   │   └── inference.py        # Submission CSV generation
+│   ├── experiments/
+│   │   ├── run_tfidf_baseline.py
+│   │   ├── run_transformer.py
+│   │   └── run_ensemble.py
+│   ├── configs/
+│   ├── results/
+│   │   ├── logs/
+│   │   ├── plots/
+│   │   └── submissions/
+│   └── data/
+│       ├── raw/
+│       └── processed/
 │
-├── task_b/ # Subtask B (same structure as A)
-├── task_c/ # Subtask C (same structure as A)
+├── task_b/                     # Subtask B (same structure as A)
+├── task_c/                     # Subtask C (same structure as A)
 │
 ├── notebooks/
-│ ├── EDA.ipynb
-│ └── model_analysis.ipynb
+│   ├── EDA.ipynb
+│   └── model_analysis.ipynb
 │
 ├── scripts/
-│ ├── download_models.sh
-│ ├── prepare_data.py
-│ └── evaluate_all.py
+│   ├── download_models.sh
+│   ├── prepare_data.py
+│   └── evaluate_all.py
 │
 ├── requirements.txt
 ├── .gitignore
 └── README.md
+```
+
+
+
 
