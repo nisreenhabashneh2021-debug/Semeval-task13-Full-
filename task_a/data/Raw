@@ -1,1 +1,33 @@
-kaggle competitions download -c sem-eval-2026-task-13-subtask-a
+#https://www.kaggle.com/competitions/sem-eval-2026-task-13-subtask-a/data
+#Files
+#train.parquet - the training set
+#test.parquet - the test set (currently only the public part is released, rest will be uploaded in December 2025 / January 2026)
+#sample_submission.csv - a sample submission file in the correct format (majority class prediction)
+#validation.parquet - validation set (same domain as train)
+#test_sample.parquet - 1000 samples from real test set with corresponding labels. It is given for evaluation purposes ONLY and is matching the original Public leaderboard. This data will not be used for final evaluation and is shared just as a sample
+
+
+# Core libraries
+import pandas as pd
+import numpy as np
+
+# Visualization
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# ML
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, confusion_matrix, f1_score
+
+# Transformers
+from transformers import AutoTokenizer, AutoModel, AutoModelForSequenceClassification, Trainer, TrainingArguments
+
+# Visualization style
+sns.set(style="whitegrid")
+plt.rcParams["figure.figsize"] = (8, 5)
+
+#load the dataset
+train = pd.read_parquet("train.parquet")
+validation = pd.read_parquet("validation.parquet")
+test = pd.read_parquet("test.parquet")
