@@ -159,3 +159,4 @@ def train_transformer(
 
     trainer.train()
     return trainer, tokenizer
+
