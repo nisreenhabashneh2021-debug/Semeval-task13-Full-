@@ -1,15 +1,10 @@
-# task_b/src/__init__.py
+# task_c/src/__init__.py
 
-from .labels import FAMILIES, NUM_LABELS, label2name, name2label
-from .models import (
-    TfidfSVMModel,
-    TfidfSVMConfig,
-    build_transformer_model,
-)
+from .models import build_token_classifier
 from .train_utils import (
+    CodeOriginDataset,
     TransformerTrainConfig,
-    train_tfidf_svm,
-    train_transformer,
+    train_token_classifier,
 )
-from .eval_utils import evaluate_and_log
-from .inference import generate_submission_from_model
+from .eval_utils import evaluate_token_model
+from .inference import predict_code_origin
