@@ -1,10 +1,5 @@
 # task_b/src/train_utils.py
 
-from __future__ import annotations
-
-from dataclasses import dataclass
-from typing import Optional
-
 import numpy as np
 import pandas as pd
 import torch
@@ -145,3 +140,4 @@ def train_transformer(
 
     trainer.train()
     return trainer, tokenizer
+
