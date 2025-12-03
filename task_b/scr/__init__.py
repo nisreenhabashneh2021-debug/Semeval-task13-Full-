@@ -35,3 +35,4 @@ label2name = {i: name for i, name in enumerate(FAMILIES)}
 name2label = {name: i for i, name in enumerate(FAMILIES)}
 
 NUM_LABELS = len(FAMILIES)
+
