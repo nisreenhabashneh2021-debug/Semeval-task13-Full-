@@ -1,3 +1,4 @@
+
 # task_a/src/inference.py
 
 from __future__ import annotations
@@ -79,3 +80,4 @@ def generate_submission_from_model(
     )
     sub.to_csv(output_csv, index=False)
     return sub
+
