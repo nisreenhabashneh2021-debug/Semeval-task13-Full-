@@ -1,56 +1,65 @@
+weighted average ensemble
 
-# task_a/experiments/run_ensemble.py
+#Step 1: Get XGBoost probs on the same validation subset
 
-from __future__ import annotations
+# 0) Fix the validation subset ONCE
+val_small = validation.sample(10000, random_state=42).reset_index(drop=True)
+y_val = val_small["label"].values
 
-from pathlib import Path
+# 1) CodeBERT probs on this exact val_small
+val_ds = CodeDataset(
+    val_small["code"].tolist(),
+    val_small["label"].tolist()
+)
+pred_output = trainer.predict(val_ds)
+logits = pred_output.predictions
+codebert_prob = softmax(logits, axis=1)[:, 1]   # shape (10000,)
 
-import joblib
-import numpy as np
-
-from common.data_utils import load_parquet_splits, extract_xgb_features
-from common.metrics import compute_classification_metrics
-from common.plotting import plot_confusion_matrix, plot_metric_bars
-
-
-DATA_DIR = Path("task_a/data/raw")
-RESULTS_DIR = Path("task_a/results/logs")
-
-
-def main():
-    train, val, test = load_parquet_splits(DATA_DIR)
-
-    # Load trained models from previous runs
-    tfidf_model = joblib.load("task_a/results/tfidf_baseline_model.joblib")
-    xgb_model = joblib.load("task_a/results/xgb_model.joblib")
-
-    X_val_text = val["code"].astype(str)
-    X_val_feats = extract_xgb_features(val, text_col="code")
-    y_val = val["label"].astype(int).to_numpy()
-
-    tfidf_proba = tfidf_model.predict_proba(X_val_text)[:, 1]
-    xgb_proba = xgb_model.predict_proba(X_val_feats)[:, 1]
-
-    # Simple average
-    ensemble_proba = 0.5 * tfidf_proba + 0.5 * xgb_proba
-    y_pred = (ensemble_proba >= 0.5).astype(int)
-
-    metrics = compute_classification_metrics(y_val, y_pred)
-    print("Ensemble metrics:", metrics)
-
-    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
-    plot_metric_bars(
-        metrics, title="Ensemble metrics", save_path=RESULTS_DIR / "ensemble_metrics.png"
-    )
-    plot_confusion_matrix(
-        y_val,
-        y_pred,
-        title="Ensemble confusion matrix",
-        save_path=RESULTS_DIR / "ensemble_cm.png",
-    )
+# 2) XGBoost probs on this exact SAME val_small
+val_small_feats = val_small["code"].apply(extract_features).apply(pd.Series)
+xgb_val_prob = xgb.predict_proba(val_small_feats)[:, 1]  # shape (10000,)
 
 
-if __name__ == "__main__":
-    main()
+#Step 2: Grid-search ensemble weight and threshold
+
+from sklearn.metrics import f1_score
+
+best_f1 = 0.0
+best_w = None
+best_th = None
+
+for w in np.linspace(0, 1, 21):
+    ens_prob = w * codebert_prob + (1 - w) * xgb_val_prob
+
+    for th in np.linspace(0.2, 0.8, 25):
+        ens_pred = (ens_prob >= th).astype(int)
+        f1 = f1_score(y_val, ens_pred, average="macro")
+
+        if f1 > best_f1:
+            best_f1 = f1
+            best_w = w
+            best_th = th
+
+print("Best ensemble weight w:", best_w)
+print("Best threshold:", best_th)
+print("Best macro F1 on validation:", best_f1)
 
 
+#Evaluate
+
+from sklearn.metrics import classification_report, f1_score, confusion_matrix
+
+# We already computed ±:
+# codebert_prob
+# xgb_val_prob
+# best_w, best_th
+# y_val
+
+ens_val_prob = best_w * codebert_prob + (1 - best_w) * xgb_val_prob
+ens_val_pred = (ens_val_prob >= best_th).astype(int)
+
+print("=== ENSEMBLE VALIDATION RESULTS ===")
+print(classification_report(y_val, ens_val_pred, digits=4))
+
+print("Macro F1 (Ensemble):", f1_score(y_val, ens_val_pred, average="macro"))
+print("\nConfusion Matrix:\n", confusion_matrix(y_val, ens_val_pred))
