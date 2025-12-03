@@ -17,7 +17,7 @@ import numpy as np
 import pandas as pd
 
 # ---- CHANGE THIS PER FOLDER ----
-TASK_NAME = "task_b"   # "task_a", "task_b", or "task_c"
+TASK_NAME = "task_c"   # "task_a", "task_b", or "task_c"
 
 # -------------------------------------------------------------------
 # Make project root importable (so we can import common.*)
@@ -30,7 +30,7 @@ if PROJECT_ROOT not in sys.path:
 
 from common.data_utils import load_splits, get_text_and_labels
 from common.metrics import compute_basic_metrics, full_classification_report
-from task_b.src.models import build_tfidf_svm  # <- change to task_a/src/... if needed
+from task_c.src.models import build_tfidf_svm  # <- change to task_a/src/... if needed
 # For a pure template, you can also dynamically import, but this is simpler.
 
 # -------------------------------------------------------------------
