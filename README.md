@@ -57,7 +57,7 @@ semeval-2026-task13-full/
 │   ├── EDA.ipynb
 │   └── model_analysis.ipynb
 │
-├── scripts/
+├── scripts_all/
 │   ├── download_models.sh
 │   ├── prepare_data.py
 │   └── evaluate_all.py
@@ -66,6 +66,7 @@ semeval-2026-task13-full/
 ├── .gitignore
 └── README.md
 ```
+
 
 
 
