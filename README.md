@@ -41,12 +41,12 @@ semeval-2026-task13-full/
 │   │   ├── train_utils.py      # Training loop, collators
 │   │   ├── eval_utils.py       # Evaluation + metrics
 │   │   └── inference.py        # Submission CSV generation
+│   ├
+│   ├
 │   ├── experiments/
 │   │   ├── run_tfidf_baseline.py
 │   │   ├── run_transformer.py
-│   │   └── run_ensemble.py
-│   ├
-│   ├──├ Results   
+│   │   └── run_ensemble.py 
 │   │
 │   │   
 │   │   
@@ -70,6 +70,7 @@ semeval-2026-task13-full/
 ├── .gitignore
 └── README.md
 ```
+
 
 
 
