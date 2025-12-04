@@ -21,7 +21,7 @@ Our system includes:
 - Fully modular folder structure for scalable experimentation  
 
 
-```
+
 
  Repository Structure
 
@@ -70,7 +70,8 @@ semeval-2026-task13-full/
 ├── .gitignore
 └── README.md
 ```
-```
+
+
 
 
 
