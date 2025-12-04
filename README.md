@@ -46,8 +46,8 @@ semeval-2026-task13-full/
 │   │   ├── run_transformer.py
 │   │   └── run_ensemble.py
 │   ├
-│   ├
-│   │   
+│   ├──├ Results   
+│   │
 │   │   
 │   │   
 │   └── data/
@@ -70,6 +70,7 @@ semeval-2026-task13-full/
 ├── .gitignore
 └── README.md
 ```
+
 
 
 
