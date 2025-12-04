@@ -23,7 +23,7 @@ Our system includes:
 
 ```
 
-## 📁 Repository Structure
+ Repository Structure
 
 ```
 semeval-2026-task13-full/
@@ -69,6 +69,7 @@ semeval-2026-task13-full/
 ├── requirements.txt
 ├── .gitignore
 └── README.md
+```
 ```
 
 
