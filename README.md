@@ -22,60 +22,58 @@ Our system includes:
 
 
 ```
-<!-- ==========================  DIAGRAM CONTAINER  =========================== -->
-<div style="font-family:Arial; padding:20px;">
 
-<!-- ==========================  TITLE  ======================================= -->
-<h2 style="text-align:center; color:#1E90FF;">SemEval-2026 Task 13 – Label Flow Diagram</h2>
-
-<!-- ==========================  FLEX CONTAINER =============================== -->
-<div style="display:flex; gap:40px; justify-content:center; margin-top:30px;">
-
-<!-- ==========================  TASK A  ====================================== -->
-<div style="width:280px; background:#0A2540; padding:20px; border-radius:15px; color:white;">
-    <h3 style="text-align:center; color:#4DA3FF;">Task A</h3>
-    <p style="background:#4DA3FF; padding:10px; border-radius:8px; text-align:center;">
-        Sexist
-    </p>
-    <p style="background:#B0B0B0; padding:10px; border-radius:8px; text-align:center;">
-        Not Sexist
-    </p>
-</div>
-
-<!-- ==========================  TASK B  ====================================== -->
-<div style="width:300px; background:#102C57; padding:20px; border-radius:15px; color:white;">
-    <h3 style="text-align:center; color:#FFB84D;">Task B</h3>
-
-    <p style="background:#FFB84D; padding:10px; border-radius:8px; margin-bottom:10px;">Threats</p>
-    <p style="background:#54D1C0; padding:10px; border-radius:8px; margin-bottom:10px;">Derogation</p>
-    <p style="background:#B57BFF; padding:10px; border-radius:8px; margin-bottom:10px;">Animosity</p>
-    <p style="background:#FF6F61; padding:10px; border-radius:8px; margin-bottom:10px;">Prejudiced Discussion</p>
-</div>
-
-<!-- ==========================  TASK C  ====================================== -->
-<div style="width:420px; background:#19376D; padding:20px; border-radius:15px; color:white;">
-    <h3 style="text-align:center; color:#FFCDEA;">Task C</h3>
-
-    <p style="background:#FFB084; padding:10px; border-radius:8px;">Threats of harm</p>
-    <p style="background:#FFD19A; padding:10px; border-radius:8px;">Incitement & encouragement of harm</p>
-
-    <p style="background:#CCF6FF; padding:10px; border-radius:8px;">Descriptive attacks</p>
-    <p style="background:#A0E9FF; padding:10px; border-radius:8px;">Aggressive & emotive attacks</p>
-    <p style="background:#B6F7D1; padding:10px; border-radius:8px;">Dehumanisation & sexual objectification</p>
-
-    <p style="background:#D4C1F2; padding:10px; border-radius:8px;">Gendered slurs, insults</p>
-    <p style="background:#E0D4FF; padding:10px; border-radius:8px;">Immutable gender stereotypes</p>
-    <p style="background:#C9B8FF; padding:10px; border-radius:8px;">Backhanded gendered compliments</p>
-    <p style="background:#EAD9FF; padding:10px; border-radius:8px;">Condescending explanations</p>
-
-    <p style="background:#FFB7B2; padding:10px; border-radius:8px;">Mistreatment of individual women</p>
-    <p style="background:#FF9F9F; padding:10px; border-radius:8px;">Systemic discrimination</p>
-</div>
-
-</div>
-</div>
+## 📁 Repository Structure
 
 ```
+semeval-2026-task13-full/
+│
+├── common/                     # Shared utilities
+│   ├── __init__.py
+│   ├── data_utils.py           # Data loading, parquet readers
+│   ├── metrics.py              # Accuracy, Macro-F1, reports
+│   └── plotting.py             # Confusion matrices, plots
+│
+├── task_a/                     # Subtask A modules
+│   ├── src/
+│   │   ├── __init__.py
+│   │   ├── models.py          
+│   │   ├── train_utils.py      # Training loop, collators
+│   │   ├── eval_utils.py       # Evaluation + metrics
+│   │   └── inference.py        # Submission CSV generation
+│   ├── experiments/
+│   │   ├── run_tfidf_baseline.py
+│   │   ├── run_transformer.py
+│   │   └── run_ensemble.py
+│   ├
+│   ├
+│   │   
+│   │   
+│   │   
+│   └── data/
+│       ├── raw/
+│       └── processed/
+│
+├── task_b/                     # Subtask B (same structure as A)
+├── task_c/                     # Subtask C (same structure as A)
+│
+├── notebook_important/
+│   ├── EDA.ipynb
+│   └── model_analysis.ipynb
+│
+├── scripts_all/
+│   ├── download_models.sh
+│   ├── prepare_data.py
+│   └── evaluate_all.py
+│
+├── requirements.txt
+├── .gitignore
+└── README.md
+```
+
+
+
+
 
 
 
